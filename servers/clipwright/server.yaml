@@ -14,7 +14,7 @@ about:
   icon: https://clipwright.io/brand/clipwright-400.png
 source:
   project: https://github.com/seocombat/clipwright-mcp
-  commit: 5e3380592ff0b95b6e2a70bcbaa8654444c284bd
+  commit: 8758e6c3a25584b0576f5bccc9933a4591a4b594
 config:
   description: Add your Clipwright API key, issued at https://app.clipwright.io/api-keys
   secrets:

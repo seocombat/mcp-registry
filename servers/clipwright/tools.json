@@ -247,8 +247,1394 @@
     ]
   },
   {
+    "name": "create_film_draft",
+    "description": "Free. Starts a film draft for an explainer you write yourself, frozen in the account's brand (brand_kit): the answer names the kit's colour tokens (T.*), faces (FONT.*) and the variation (grid step, hero side) your scenes draw with. mascot_id: the hero (list_assets with mascot true); language: the script's, so a brand face without its letters is not used. Read get_film_guide first.",
+    "arguments": [
+      {
+        "name": "skill",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "mascot_id",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "language",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "brand_style",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "theme_overrides",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "style",
+        "type": "string",
+        "desc": ""
+      }
+    ]
+  },
+  {
+    "name": "put_film_files",
+    "description": "Free. Saves scene files (Movie.tsx, chapters), anchors in seconds (cues), the sound events (sfx: {s, at, dt, n, step, g} or {s, from, to}) and captions (one phrase a line, *word* its accent) on base_revision; a file set to null is deleted, an omitted one kept; cues, sfx and captions each replace the draft's when sent, and an omitted one is kept. A stale base_revision is refused: read the draft again. Code imports only react, scene-kit and its own files. Read get_film_guide first.",
+    "arguments": [
+      {
+        "name": "draft_id",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "base_revision",
+        "type": "integer",
+        "desc": ""
+      },
+      {
+        "name": "files",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "cues",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "sfx",
+        "type": "array",
+        "desc": ""
+      },
+      {
+        "name": "captions",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "beats",
+        "type": "array",
+        "desc": ""
+      },
+      {
+        "name": "storyboard",
+        "type": "array",
+        "desc": ""
+      }
+    ]
+  },
+  {
+    "name": "get_film_draft",
+    "description": "Free. A film draft: its revision, frozen theme, file names and sizes, anchors, sounds and captions. Read get_film_guide first.",
+    "arguments": [
+      {
+        "name": "draft_id",
+        "type": "string",
+        "desc": ""
+      }
+    ]
+  },
+  {
+    "name": "check_film",
+    "description": "Free and instant. Runs the checks stills and render_film run before money on a draft revision and a delivered voice: captions on the voice, Movie.tsx's factory, anchors, names and stamps, product pictures, sounds and the storyboard. Answers refusals as file:line, warnings, each anchor's second and word, and the voice's end. Pass changes (files, cues, sfx, captions, storyboard) to check them before saving. Run it after every change and fix until ok is true; then take stills. Read get_film_guide first.",
+    "arguments": [
+      {
+        "name": "draft_id",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "revision",
+        "type": "integer",
+        "desc": ""
+      },
+      {
+        "name": "voice_run_id",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "scene_images",
+        "type": "array",
+        "desc": ""
+      },
+      {
+        "name": "scene_video",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "files",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "cues",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "sfx",
+        "type": "array",
+        "desc": ""
+      },
+      {
+        "name": "captions",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "beats",
+        "type": "array",
+        "desc": ""
+      },
+      {
+        "name": "storyboard",
+        "type": "array",
+        "desc": ""
+      }
+    ]
+  },
+  {
+    "name": "quote_voice",
+    "description": "Free. What make_voice would hold for this text: the most it can charge. Show it and wait for the go-ahead. Read get_film_guide first.",
+    "arguments": [
+      {
+        "name": "text",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "voice",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "cut_id",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "max_credits",
+        "type": "integer",
+        "desc": ""
+      }
+    ]
+  },
+  {
+    "name": "make_voice",
+    "description": "Input: the same fields as quote_voice, plus attempt. Paid per second delivered, after quote_voice. Speaks the script with a narrator and returns its words, each with start and end seconds: write chunks, anchors and scenes on these timings; film_sec is how long the film on it runs. Waits up to 45 s; an unfinished run names get_film_run to call. For a faceless video, pass its cut_id (create_cut): the record takes the voice, and the delivered voice answers next: the record's next call. The same arguments and attempt return the run already started, whatever its state; to repeat a failed run, pass attempt + 1 (attempt 2 after the first), which starts a new run, charged as its quote says. Read get_film_guide first.",
+    "arguments": [
+      {
+        "name": "text",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "voice",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "cut_id",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "max_credits",
+        "type": "integer",
+        "desc": ""
+      },
+      {
+        "name": "attempt",
+        "type": "integer",
+        "desc": ""
+      }
+    ]
+  },
+  {
+    "name": "quote_stills",
+    "description": "Free. What preview_stills would hold: one still per asked moment. free_units: how many of them are free (the first 120 stills of a draft in any 24 h); free_left: the draft's free stills after them; the start counts them again. Read get_film_guide first.",
+    "arguments": [
+      {
+        "name": "draft_id",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "revision",
+        "type": "integer",
+        "desc": ""
+      },
+      {
+        "name": "voice_run_id",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "at",
+        "type": "array",
+        "desc": ""
+      },
+      {
+        "name": "sheet",
+        "type": "boolean",
+        "desc": ""
+      },
+      {
+        "name": "scene_images",
+        "type": "array",
+        "desc": ""
+      },
+      {
+        "name": "scene_video",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "max_credits",
+        "type": "integer",
+        "desc": ""
+      }
+    ]
+  },
+  {
+    "name": "preview_stills",
+    "description": "Input: the same fields as quote_stills, plus attempt. Free for a draft's first 120 stills in any 24 h, then paid per still drawn, after quote_stills and a clean check_film. Gates the draft revision first (a refusal names file:line and is free), then draws up to 24 moments (anchors, shown 0.25 s after, or seconds; omitted, the storyboard's events) on the draft's theme and the voice's captions, and returns them as pictures with what the layout probe found on each. sheet: one tiled picture instead of one per still, always above 8. Look at every still and fix. The same arguments and attempt return the run already started, whatever its state; to repeat a failed run, pass attempt + 1 (attempt 2 after the first), which starts a new run, charged as its quote says. Read get_film_guide first.",
+    "arguments": [
+      {
+        "name": "draft_id",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "revision",
+        "type": "integer",
+        "desc": ""
+      },
+      {
+        "name": "voice_run_id",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "at",
+        "type": "array",
+        "desc": ""
+      },
+      {
+        "name": "sheet",
+        "type": "boolean",
+        "desc": ""
+      },
+      {
+        "name": "scene_images",
+        "type": "array",
+        "desc": ""
+      },
+      {
+        "name": "scene_video",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "max_credits",
+        "type": "integer",
+        "desc": ""
+      },
+      {
+        "name": "attempt",
+        "type": "integer",
+        "desc": ""
+      }
+    ]
+  },
+  {
+    "name": "quote_render",
+    "description": "Free. What render_film would hold, charged only when delivered, and film_sec: how long the film runs, the voice then a short tail. With music.generate, lines show the film and the music apart. Read get_film_guide first.",
+    "arguments": [
+      {
+        "name": "draft_id",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "revision",
+        "type": "integer",
+        "desc": ""
+      },
+      {
+        "name": "voice_run_id",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "scene_images",
+        "type": "array",
+        "desc": ""
+      },
+      {
+        "name": "scene_video",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "music",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "max_credits",
+        "type": "integer",
+        "desc": ""
+      }
+    ]
+  },
+  {
+    "name": "render_film",
+    "description": "Input: the same fields as quote_render, plus attempt. Paid when the film is delivered, after quote_render. Renders the draft revision on the voice: captions on its words, the sound events under it, the frozen theme, and music if asked: a library track (free) or one made for the film (charged only when the delivered film carries it), lower under the voice. Returns at once; call get_film_run until it is succeeded (video_url) or failed. The same arguments and attempt return the run already started, whatever its state; to repeat a failed run, pass attempt + 1 (attempt 2 after the first), which starts a new run, charged as its quote says. Read get_film_guide first.",
+    "arguments": [
+      {
+        "name": "draft_id",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "revision",
+        "type": "integer",
+        "desc": ""
+      },
+      {
+        "name": "voice_run_id",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "scene_images",
+        "type": "array",
+        "desc": ""
+      },
+      {
+        "name": "scene_video",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "music",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "max_credits",
+        "type": "integer",
+        "desc": ""
+      },
+      {
+        "name": "attempt",
+        "type": "integer",
+        "desc": ""
+      }
+    ]
+  },
+  {
+    "name": "quote_film_hero",
+    "description": "Free. What make_film_hero would hold: every pose of the hero (with mascot_id, every pose the mascot lacks), the most it can charge. Show it and wait for the go-ahead. Read get_film_guide first.",
+    "arguments": [
+      {
+        "name": "character_reference",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "character_details",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "script",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "voice_run_id",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "mascot_id",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "head",
+        "type": "boolean",
+        "desc": ""
+      },
+      {
+        "name": "max_credits",
+        "type": "integer",
+        "desc": ""
+      }
+    ]
+  },
+  {
+    "name": "make_film_hero",
+    "description": "Input: the same fields as quote_film_hero, plus attempt. Paid per pose published (a head: once, saved whole), after quote_film_hero; a drawn pose whose face shows but whose mouth cannot move with the voice is published with a warning and not charged (a pose with no face to animate is charged). At most 10 heroes an hour, and none while the account has received 27 such uncharged poses in the last 24 hours. Draws a hero in nine poses and saves it as a mascot of your assets: from character_reference or character_details, else invented to fit the meaning of script (or of voice_run_id's text). With mascot_id alone, completes that saved mascot instead: only the poses it lacks are drawn, in its look, and added to it. A person's photo is drawn as a cartoon unless character_details ask for a photoreal look; a photoreal hero keeps a still face. A run that publishes no pose charges nothing. Returns at once; call get_film_run until it is succeeded: it shows the poses as one picture, look at it before any stills. Then pass hero.mascot_id to create_film_draft: every later film uses it with no pose made or charged again. The same arguments and attempt return the run already started, whatever its state; to repeat a failed run, pass attempt + 1 (attempt 2 after the first), which starts a new run, charged as its quote says. Read get_film_guide first.",
+    "arguments": [
+      {
+        "name": "character_reference",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "character_details",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "script",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "voice_run_id",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "mascot_id",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "head",
+        "type": "boolean",
+        "desc": ""
+      },
+      {
+        "name": "max_credits",
+        "type": "integer",
+        "desc": ""
+      },
+      {
+        "name": "attempt",
+        "type": "integer",
+        "desc": ""
+      }
+    ]
+  },
+  {
+    "name": "create_ad",
+    "description": "Free. Starts the ad's record once the script and shot list are written: brief (product, audience, message, notes with the product page's facts) and slots, one per shot in cut order ({ id: \"hook\", shot: \"what it shows and the line it carries\" }). Pass its ad_id and a slot to check_take when you check a take, and ad_id to render_edit with each clip's slot. people_only: true marks a shot with no product, label or detail in any frame. Mistakes to avoid: one slot for two shots; a new record per take; slot ids you will not reuse.",
+    "arguments": [
+      {
+        "name": "brief",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "slots",
+        "type": "array",
+        "desc": ""
+      }
+    ]
+  },
+  {
+    "name": "update_ad",
+    "description": "Free. Replaces the record's brief, its slots or both. slots is the whole shot list again, not a patch: send every slot you keep. Mistakes to avoid: dropping a slot that has checked takes (refused; reword it instead); a new record when the shot list grows.",
+    "arguments": [
+      {
+        "name": "ad_id",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "brief",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "slots",
+        "type": "array",
+        "desc": ""
+      }
+    ]
+  },
+  {
+    "name": "get_ad",
+    "description": "Free. The ad record: each slot's state (no_take, checking, failed, passed), read from its check_take verdicts only, its checked takes with every verdict, the edits, and next: the edit with each slot's latest take that passed on its longest clean window, and the slots still to fill with takes you judged on take_frames. passed: own footage, or the latest verdict on the take's file passed. The check is optional: render_edit cuts any take and says a verdict in warnings. Mistakes to avoid: guessing windows when next already has them.",
+    "arguments": [
+      {
+        "name": "ad_id",
+        "type": "string",
+        "desc": ""
+      }
+    ]
+  },
+  {
+    "name": "quote_edit",
+    "description": "Free. What render_edit would hold for this edit list, and film_sec: how long the cut runs. Checks every clip, window, voice piece and caption first and names what is wrong; a check_take verdict on a clip's file, when there is one, is said in warnings (a failed verdict, a window across a defect or past the clean windows). With music.generate, lines show the cut and the music apart. Answers next: render_edit with the same arguments. Show it and wait for the go-ahead. Mistakes to avoid: from and to in the edit's seconds (they are the clip's own); captions in the clip's seconds (they are the edit's); a window that keeps an empty first frame or leaves the take's clean windows; a voice that runs past the cut; music.at in a clip's seconds (it is the edit's).",
+    "arguments": [
+      {
+        "name": "clips",
+        "type": "array",
+        "desc": ""
+      },
+      {
+        "name": "voice",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "captions",
+        "type": "array",
+        "desc": ""
+      },
+      {
+        "name": "hold",
+        "type": "number",
+        "desc": ""
+      },
+      {
+        "name": "music",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "ambience",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "ad_id",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "max_credits",
+        "type": "integer",
+        "desc": ""
+      }
+    ]
+  },
+  {
+    "name": "render_edit",
+    "description": "Input: the same fields as quote_edit, plus attempt. Paid once per delivered cut, after quote_edit. Cuts windows of your own delivered generate_video clips (run_id) or video assets (asset_id) back to back, holds the last frame for hold seconds, lays the make_voice take (whole at voice.at, or its sentences as voice.pieces on the seconds their pictures start), plays a clip's own sound where it has sound: true (a clip made with audio: true, never under the voice's words), lays music if asked and burns in captions: one vertical 9:16 720p MP4 at 25 fps, up to 60 s. music is a library track (free) or one made for the cut (charged only when the delivered cut carries it); it plays from music.at to the end, lower under the voice. A clip up to 3% off 9:16 is cropped to fill it; one further off is shown whole with bars; warnings name each. An edit that fails costs nothing. Returns at once; call get_film_run until it is succeeded (video_url) or failed. Read each take you made on take_frames (free) before you cut it; check_take is optional, worth it on a product shot or when the user asks, and a verdict on a clip's file is said in warnings. With ad_id every clip names its slot. Mistakes to avoid: rendering without the quote's go-ahead; cutting a take you have not looked at; changing the arguments between quote and render; expecting a zoom (it has none); music under a voice-led ad at volume above -6; a music-only cut without music; a caption over the product, its print, the hands or the face. The same arguments and attempt return the run already started, whatever its state; to repeat a failed run, pass attempt + 1 (attempt 2 after the first), which starts a new run, charged as its quote says.",
+    "arguments": [
+      {
+        "name": "clips",
+        "type": "array",
+        "desc": ""
+      },
+      {
+        "name": "voice",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "captions",
+        "type": "array",
+        "desc": ""
+      },
+      {
+        "name": "hold",
+        "type": "number",
+        "desc": ""
+      },
+      {
+        "name": "music",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "ambience",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "ad_id",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "max_credits",
+        "type": "integer",
+        "desc": ""
+      },
+      {
+        "name": "attempt",
+        "type": "integer",
+        "desc": ""
+      }
+    ]
+  },
+  {
+    "name": "take_frames",
+    "description": "Free. Your generate_video clip (run_id) or video asset (asset_id) as contact sheets: frames at fps (8 to read the whole take, 12 to 24 on a contact), each labelled with its second, 8 to a row, at most 96 frames a call and 60 calls an hour. from and to narrow the seconds; crop (x, y, w, h, shares of the frame) enlarges one part, such as a hand on the product. Look at every frame: a hand that passes through the product, a lid that lifts before it is touched, a product that changes shape. shots: the stretches between cuts and whips in these seconds, each with its subject motion, camera move and camera shake (run it on a reference reel saved as a video asset to measure its energy shot by shot). Waits up to 45 s and returns the sheets as pictures. This is your own look before a cut; check_take, paid, judges a product shot or a take the user wants checked. Mistakes to avoid: calling a take clean from 8 fps alone (read each contact again at 12 to 24 fps with a crop); calling a moment no frame shows clean; checking the thumbnail instead of every frame. The same arguments and attempt return the run already started, whatever its state; to repeat a failed run, pass attempt + 1 (attempt 2 after the first), which starts a new run, charged as its quote says.",
+    "arguments": [
+      {
+        "name": "run_id",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "asset_id",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "fps",
+        "type": "integer",
+        "desc": ""
+      },
+      {
+        "name": "from",
+        "type": "number",
+        "desc": ""
+      },
+      {
+        "name": "to",
+        "type": "number",
+        "desc": ""
+      },
+      {
+        "name": "crop",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "max_credits",
+        "type": "integer",
+        "desc": ""
+      },
+      {
+        "name": "attempt",
+        "type": "integer",
+        "desc": ""
+      }
+    ]
+  },
+  {
+    "name": "quote_take_check",
+    "description": "Free. What check_take would hold for this clip, and next: check_take with the same arguments. Show it and wait for the go-ahead. Mistakes to avoid: leaving out ad_id and slot when the take is for an ad record (its verdict then does not join the record). For a faceless take, against picture judges it against the picture it was made from: direction is { start, changes: [{ at_s, cause, result }], camera, end, locks }, look { words, palette } names the colours it keeps; picture is needed only for a take made without a first frame. Its verdict adds action_at_s (put the beat's take.action_s there) and subject (the box a push closes on); a colour outside the look is advice only. Against a picture, cut_id (create_cut) and slot are required: the record's slot that needs this take; a picture, card or footage slot takes no check. A passed take answers next: get_cut, which names what the record still needs. The quote says what it costs.",
+    "arguments": [
+      {
+        "name": "run_id",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "asset_id",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "against",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "direction",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "look",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "picture",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "product_image",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "moves",
+        "type": "array",
+        "desc": ""
+      },
+      {
+        "name": "ad_id",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "cut_id",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "slot",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "format",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "speed",
+        "type": "boolean",
+        "desc": ""
+      },
+      {
+        "name": "max_credits",
+        "type": "integer",
+        "desc": ""
+      }
+    ]
+  },
+  {
+    "name": "check_take",
+    "description": "Input: the same fields as quote_take_check, plus attempt. Paid per delivered verdict, after quote_take_check. Judges your generate_video clip (run_id) or video asset (asset_id) frame by frame against direction, the shot's part of the prompt you made it with (up to 1500 characters): each defect with its code, the seconds it shows, its repair level (asset: a new first frame or reference; action: the prompt's steps; camera: the framing; roll: the same prompt again) and whole_take when it cannot be cut out, then clean: the windows without defects, 0.5 s or longer, to cut from. A take with its own sound is also heard: a voice that does not fit the person on screen who speaks is VOICE_MISMATCH, a fault of its sound that leaves the clean windows as they are; render_edit then cuts the take only silent (no sound: true). product_image: the product as it really is, a link or { run_id } of your generate_image picture, { upload_id } or { asset_id }; moves: the seconds a hand meets the product, looked at first. ad_id and slot: the verdict joins that slot of the ad record. format: fashion (people and clothes in motion) or product (a product in the hands, the default); motion, free, measures the take and each clean window as subject motion (the camera's own move taken out), camera move and camera shake, names a window too static for this format and names shake on its own: advice to re-shoot, not a defect, so it never fails the take; only a take in which nothing moves at all fails, with FROZEN_TAKE. With speed: true a take up to 30 s is also read for speed: something hanging or drifting in the air (a salt flake, a drop, a flame rising slowly) is SLOW_MOTION with its seconds in why; it neither fails the take nor narrows the clean windows, so cut it, make the take again or keep it where a slow beat suits the shot. The check is optional: render_edit and render_cut cut any take and say a verdict on its file in warnings. A check that delivers no verdict costs nothing. Waits up to 45 s; an unfinished run names get_film_run to call. A passed take answers next (the record, or the edit on its clean window); a failed one answers next: the take's own generate_video request to repair. Mistakes to avoid: the whole prompt with its shared prefix as direction (send the shot's action and timeline); no product_image for a labelled product; cutting around a whole_take defect; repeating the same request for an action or asset fault. For a faceless take, against picture judges it against the picture it was made from: direction is { start, changes: [{ at_s, cause, result }], camera, end, locks }, look { words, palette } names the colours it keeps; picture is needed only for a take made without a first frame. Its verdict adds action_at_s (put the beat's take.action_s there) and subject (the box a push closes on); a colour outside the look is advice only. Against a picture, cut_id (create_cut) and slot are required: the record's slot that needs this take; a picture, card or footage slot takes no check. A passed take answers next: get_cut, which names what the record still needs. The quote says what it costs. The same arguments and attempt return the run already started, whatever its state; to repeat a failed run, pass attempt + 1 (attempt 2 after the first), which starts a new run, charged as its quote says.",
+    "arguments": [
+      {
+        "name": "run_id",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "asset_id",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "against",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "direction",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "look",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "picture",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "product_image",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "moves",
+        "type": "array",
+        "desc": ""
+      },
+      {
+        "name": "ad_id",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "cut_id",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "slot",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "format",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "speed",
+        "type": "boolean",
+        "desc": ""
+      },
+      {
+        "name": "max_credits",
+        "type": "integer",
+        "desc": ""
+      },
+      {
+        "name": "attempt",
+        "type": "integer",
+        "desc": ""
+      }
+    ]
+  },
+  {
+    "name": "quote_cut",
+    "description": "Input: the same fields as check_cut, plus max_credits. Free. What render_cut would hold for this cut sheet, line by line in items (the cut, seconds over 60, a described bed, takes' own sound, music), and film_sec: how long it runs. Checks the sheet as check_cut does and names what is wrong by field path. cut_id names the cut record the video belongs to; a record that is not yours is refused (404 cut_not_found). Show it and wait for the go-ahead. Read get_film_guide first.",
+    "arguments": [
+      {
+        "name": "format",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "look",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "voice_run_id",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "method",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "structure",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "style",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "beats",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "events",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "captions",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "transitions",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "sound",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "breath",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "pairing",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "callouts",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "overrides",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "cut_id",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "max_credits",
+        "type": "integer",
+        "desc": ""
+      }
+    ]
+  },
+  {
+    "name": "render_cut",
+    "description": "Input: the same fields as check_cut, plus max_credits, attempt. Paid once per delivered video, after quote_cut. Renders a cut sheet check_cut passed, of the cut record cut_id: each beat's picture, held frame or take window on its words with its camera move and punch-ins, cards, outlines and captions with their accents; the voice centred in stereo with the bed, hits and effects under it, a take's own sound where take_sound lists it, and music when asked. One vertical 9:16 720p MP4 at 25 fps, 10 to 90 s, with up to 8 described sounds made. A part that could not be made is left out and not charged; a cut that fails costs nothing. A take's check against its picture is optional; a verdict on its file is said in warnings. Returns at once; call get_film_run until it is succeeded (video_url) or failed; get_cut lists the render too. The same arguments and attempt return the run already started, whatever its state; to repeat a failed run, pass attempt + 1 (attempt 2 after the first), which starts a new run, charged as its quote says. Read get_film_guide first.",
+    "arguments": [
+      {
+        "name": "format",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "look",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "voice_run_id",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "method",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "structure",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "style",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "beats",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "events",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "captions",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "transitions",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "sound",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "breath",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "pairing",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "callouts",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "overrides",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "cut_id",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "max_credits",
+        "type": "integer",
+        "desc": ""
+      },
+      {
+        "name": "attempt",
+        "type": "integer",
+        "desc": ""
+      }
+    ]
+  },
+  {
+    "name": "create_cut",
+    "description": "Free. Starts the faceless video's cut record once the script is approved: brief (format, topic, look, language, script, voice_run_id, notes) and slots, the shot plan in order, one per shot ({ id: \"lamp\", needs: take, picture, card or footage, shot: \"what it shows and the words it plays on\" }). take is a clip you make with generate_video from its picture; footage is the user's own video. Pass its cut_id to make_voice, to the take checks with a take slot, and to the previews and the render: each names the record, and the record answers next: the call to make now. Mistakes to avoid: a picture or card slot for a take; a footage slot for a clip made with generate_video; a new record per take. Read get_film_guide first.",
+    "arguments": [
+      {
+        "name": "brief",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "slots",
+        "type": "array",
+        "desc": ""
+      }
+    ]
+  },
+  {
+    "name": "update_cut",
+    "description": "Free. Replaces the record's brief, its slots or both. slots is the whole shot plan again, not a patch: send every slot you keep. The guide version stays the one the record was made under. Mistakes to avoid: dropping a slot that has checked takes, or making it a picture, card or footage slot (refused with 409; reword its shot instead). Read get_film_guide first.",
+    "arguments": [
+      {
+        "name": "cut_id",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "brief",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "slots",
+        "type": "array",
+        "desc": ""
+      }
+    ]
+  },
+  {
+    "name": "get_cut",
+    "description": "Free. The cut record: the brief, the guide version it was made under, the voice, each slot with its state (take slots: no_take, checking, failed or passed, with every check_take verdict; other slots: none), the previews and renders, and next: the call to make now with its arguments (the voice, then check_cut on a sheet with the voice's sentences as beats). A take's check is optional and never blocks the video. Mistakes to avoid: working from memory instead of next. Read get_film_guide first.",
+    "arguments": [
+      {
+        "name": "cut_id",
+        "type": "string",
+        "desc": ""
+      }
+    ]
+  },
+  {
+    "name": "quote_cut_preview",
+    "description": "Input: the same fields as check_cut, plus at, max_credits. Free. What preview_cut would hold: one still per asked word. free_units: how many of them are free (an account's first 120 stills in any 24 h, across its cut records); free_left: the free stills after them; the start counts them again. Checks the sheet as check_cut does and names what is wrong by field path; a take need not have passed its check yet. Show it and wait for the go-ahead. Mistakes to avoid: quoting a sheet check_cut still refuses. Read get_film_guide first.",
+    "arguments": [
+      {
+        "name": "format",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "look",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "voice_run_id",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "method",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "structure",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "style",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "beats",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "events",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "captions",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "transitions",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "sound",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "breath",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "pairing",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "callouts",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "overrides",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "cut_id",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "at",
+        "type": "array",
+        "desc": ""
+      },
+      {
+        "name": "max_credits",
+        "type": "integer",
+        "desc": ""
+      }
+    ]
+  },
+  {
+    "name": "preview_cut",
+    "description": "Input: the same fields as check_cut, plus at, max_credits, attempt. Free for an account's first 120 stills in any 24 h, across its cut records, then paid per still drawn, after quote_cut_preview and a clean check_cut. Draws up to 24 stills of the cut sheet of the record cut_id, each the frame just after an asked word starts (at: word indexes of the voice), with the picture, take or card, its camera move, punch-ins, outlines, event text and captions as render_cut draws them, and returns them as pictures. Look at every still and fix the sheet before quote_cut. A preview that draws nothing costs nothing. Waits up to 45 s; an unfinished run names get_film_run to call. Mistakes to avoid: previewing before check_cut has no refusals; asking every word instead of the accents, the events and each beat's first word. The same arguments and attempt return the run already started, whatever its state; to repeat a failed run, pass attempt + 1 (attempt 2 after the first), which starts a new run, charged as its quote says. Read get_film_guide first.",
+    "arguments": [
+      {
+        "name": "format",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "look",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "voice_run_id",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "method",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "structure",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "style",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "beats",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "events",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "captions",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "transitions",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "sound",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "breath",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "pairing",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "callouts",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "overrides",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "cut_id",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "at",
+        "type": "array",
+        "desc": ""
+      },
+      {
+        "name": "max_credits",
+        "type": "integer",
+        "desc": ""
+      },
+      {
+        "name": "attempt",
+        "type": "integer",
+        "desc": ""
+      }
+    ]
+  },
+  {
+    "name": "get_film_run",
+    "description": "Free. One stills, voice, render, edit, hero, take frames or take check run: its state, credits, warnings and what it delivered. Waits up to 45 s for an unfinished run to end; call it again while it is still working. A delivered stills run answers its pictures again, at no charge. Read get_film_guide first.",
+    "arguments": [
+      {
+        "name": "run_id",
+        "type": "string",
+        "desc": ""
+      }
+    ]
+  },
+  {
+    "name": "get_film_guide",
+    "description": "Free. Read this first, before any other film tool: the explainer guide (each step's tool, the rules the checks refuse, a whole example film), its method appendix, and the scene kit's files get_film_kit serves. format: story, list, own_pictures or cartoon reads how to make that faceless video yourself from make_voice, generate_image and generate_video instead; section reads one part of it (steps first). version: the whole guide's version, the same for every section; a cut record keeps the one it was made under.",
+    "arguments": [
+      {
+        "name": "format",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "section",
+        "type": "string",
+        "desc": ""
+      }
+    ]
+  },
+  {
+    "name": "check_cut",
+    "description": "Free and instant. Checks a faceless cut sheet (story, list, own_pictures or cartoon) against your make_voice words and your own pictures, held frames and generate_video takes: every source yours, delivered and within 15% of 9:16; the beats covering the words in order; nothing on screen still for over half a second; each take long enough for its beat. Answers ok, refusals by field path, advice (keep a choice with overrides and its why), warnings and the planned shots with each take's window. A stretch over 3 s of pictures, held frames or cards with nothing landing is refused unless each beat in it names its hold. cut_id: the cut record the sheet belongs to; a passed sheet then answers next: quote_cut_preview, and without it next: create_cut. Run it after every change until ok is true. Mistakes to avoid: pairing pictures by the order they came in instead of by what they show, playing a take past the second it leaves its picture, and holding a frame still where a picture with a camera move is meant. Read get_film_guide first.",
+    "arguments": [
+      {
+        "name": "format",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "look",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "voice_run_id",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "method",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "structure",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "style",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "beats",
+        "type": "array",
+        "desc": ""
+      },
+      {
+        "name": "events",
+        "type": "array",
+        "desc": ""
+      },
+      {
+        "name": "captions",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "transitions",
+        "type": "array",
+        "desc": ""
+      },
+      {
+        "name": "sound",
+        "type": "object",
+        "desc": ""
+      },
+      {
+        "name": "breath",
+        "type": "string",
+        "desc": ""
+      },
+      {
+        "name": "pairing",
+        "type": "array",
+        "desc": ""
+      },
+      {
+        "name": "callouts",
+        "type": "array",
+        "desc": ""
+      },
+      {
+        "name": "overrides",
+        "type": "array",
+        "desc": ""
+      },
+      {
+        "name": "cut_id",
+        "type": "string",
+        "desc": ""
+      }
+    ]
+  },
+  {
+    "name": "get_film_kit",
+    "description": "Free. The scene kit's sources your film imports as scene-kit, with a reference film (films/espresso-hit): read index.ts and the reference first, then the drawers whose props you use. path: one file a call; without it, the list of files. Read get_film_guide first.",
+    "arguments": [
+      {
+        "name": "path",
+        "type": "string",
+        "desc": ""
+      }
+    ]
+  },
+  {
     "name": "make_ugc",
-    "description": "Input: the same fields as quote_ugc, plus attempt. Start a lip-synced UGC video; the actor is actor_id, image or the default. Format and resolution follow the request and the source, defaulting to 720x1280. Captions are OPT-IN: ask the user first. A field marked NOT HONORED YET does not reach the renderer. Poll get_run with its poll.arguments; a failed run whose video is still being made can return to queued, named in warnings[]. attempt=2,3,… starts a NEW run. A video like a reference reel: plan_reference_remake with its analysis_id instead. Price: HeyGen presenter: presenter, HeyGen Avatar IV 10 credits per second the presenter is in the video, covered or not; OmniHuman presenter: presenter, OmniHuman 2.0 22 credits per second the presenter is in the video, covered or not; each plus production (voice and render) 1 credits per second of video plus live avatar on a call 400 credits per call still in the video, at least 50. Quote first with quote_ugc.",
+    "description": "Input: the same fields as quote_ugc, plus attempt. Start a lip-synced UGC video; the actor is actor_id, image or the default. Format and resolution follow the request and the source, defaulting to 720x1280. Captions are OPT-IN: ask the user first. A field marked NOT HONORED YET does not reach the renderer. Poll get_run with its poll.arguments; a failed run whose video is still being made can return to queued, named in warnings[]. attempt=2,3,… starts a NEW run. A video like a reference reel: plan_reference_remake with its analysis_id instead. Price: HeyGen presenter: presenter, HeyGen Avatar IV 10 credits per second the presenter is in the video, covered or not plus live shot, speaking while acting 30 credits per second the presenter is in the video, covered or not plus live shot, acting under voice-over 30 credits per second the presenter is in the video, covered or not plus production (voice and render) 1 credits per second of video plus live avatar on a call 400 credits per call still in the video plus scene made for the video 25 credits per scene drawn in the video plus music under the voice 60 credits per music track in the video, at least 50; OmniHuman presenter: presenter, OmniHuman 2.0 22 credits per second the presenter is in the video, covered or not plus live shot, speaking while acting 30 credits per second the presenter is in the video, covered or not plus live shot, acting under voice-over 30 credits per second the presenter is in the video, covered or not plus production (voice and render) 1 credits per second of video plus live avatar on a call 400 credits per call still in the video plus scene made for the video 25 credits per scene drawn in the video plus music under the voice 60 credits per music track in the video, at least 50; HeyGen Avatar 6 Turbo presenter: presenter, HeyGen Avatar 6 Turbo 12 credits per second the presenter is in the video, covered or not plus production (voice and render) 1 credits per second of video, at least 50. Quote first with quote_ugc.",
     "arguments": [
       {
         "name": "script",
@@ -967,7 +2353,7 @@
       {
         "name": "templates",
         "type": "array",
-        "desc": "Price unchanged, a covered presenter still billed. Kinds: tag, lower_third, end_card, title_card, quote, stat, callout, checklist, phone_call, compare, notification, progress, rating, chat_window, video_grid, word_title, phone_screen, terminal, pointer_chips, chart, race, hand_title, word_fill. Data and limits per kind: describe_tool."
+        "desc": "Price unchanged, a covered presenter still billed. Kinds: tag, lower_third, end_card, title_card, quote, stat, callout, checklist, phone_call, compare, notification, progress, rating, chat_window, video_grid, word_title, phone_screen, terminal, pointer_chips, chart, race, hand_title, word_fill, cover_story, series_frame, comment_cta, backdrop. Data and limits per kind: describe_tool."
       },
       {
         "name": "template_theme",
@@ -1935,7 +3321,7 @@
   },
   {
     "name": "make_faceless",
-    "description": "Input: the same fields as quote_faceless, plus attempt. Start a faceless video from a script or brief: an opening clip and image scenes. You select 30–90 seconds; it ends with its narration, at least 25 seconds and at most a quarter past the selection, never beyond 90. Captions are on unless turned off. Poll get_run. attempt=2,3,… starts a NEW run. Price: generated picture 7 credits per image plus opening clip 49 credits per clip plus production (story, voice and render) 1 credits per second of video, at least 50. Quote first with quote_faceless.",
+    "description": "Input: the same fields as quote_faceless, plus attempt. Start a faceless video from a script or brief: an opening clip and image scenes. You select 30–90 seconds; it ends with its narration, at least 25 seconds and at most a quarter past the selection, never beyond 90. Captions are on unless turned off. Poll get_run. attempt=2,3,… starts a NEW run. Price: generated picture 7 credits per image plus opening clip 49 credits per clip plus production (story, voice and render) 1 credits per second of video plus action shot 30 credits per second of clip plus scene made for the video 25 credits per scene drawn in the video plus music under the voice 60 credits per music track in the video, at least 50. Quote first with quote_faceless.",
     "arguments": [
       {
         "name": "input_mode",
@@ -2225,6 +3611,17 @@
     "name": "get_account",
     "description": "This account's credits. Free. debt_credits above zero refuses make_ugc (debt_outstanding) until credits are bought; else balance_credits is what a run can spend: plan_credits (this month's, spent first) plus pack_credits; plan names the monthly plan. holds_credits are held by runs in progress. support_replies holds our replies.",
     "arguments": []
+  },
+  {
+    "name": "get_ad_guide",
+    "description": "Free. Read it before you write an ad with make_ugc: the word → device catalogue (which list_moves names fit which words), the hook, poses, live shots by action, captions, hands and timeline, and density. Then the method for making the ad yourself shot by shot: product and hero sheets, location, state stills, a motion test, the shot list, takes, a frame audit, repair, and the edit with render_edit. With no section it answers the index: which section to read, every section's title, and the order and final check of making the ad yourself. section reads one part whole: ugc, or one step. version changes whenever the guide does; read it again when it differs from the one your ad record (get_ad) notes.",
+    "arguments": [
+      {
+        "name": "section",
+        "type": "string",
+        "desc": ""
+      }
+    ]
   },
   {
     "name": "list_prices",
